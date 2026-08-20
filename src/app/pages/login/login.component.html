@@ -1,0 +1,250 @@
+<div class="min-h-screen w-full flex bg-background text-foreground overflow-hidden">
+  
+  <!-- Left Column: Hero Campus Photos Animated Slider (Visible on lg screens) -->
+  <div class="hidden lg:flex lg:w-1/2 relative flex-col justify-between p-12 overflow-hidden bg-black select-none">
+    
+    <!-- Campus Photos Cross-Fade Slider Background -->
+    @for (slide of campusSlides; track slide.image; let i = $index) {
+      <img
+        [src]="slide.image"
+        [alt]="slide.title"
+        class="absolute inset-0 size-full object-cover object-center transition-all duration-1000 ease-in-out"
+        [class.opacity-100]="currentSlideIndex() === i"
+        [class.opacity-0]="currentSlideIndex() !== i"
+        [class.scale-105]="currentSlideIndex() === i"
+        [class.scale-100]="currentSlideIndex() !== i"
+      />
+    }
+    
+    <!-- Dark Gradient Overlays for High Legibility -->
+    <div class="absolute inset-0 bg-gradient-to-b from-black/80 via-black/45 to-black/90 pointer-events-none z-10"></div>
+
+    <!-- Top Left Brand Badge & Navigation Controls -->
+    <div class="relative z-20 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="size-10 rounded-full bg-white backdrop-blur-md border border-white/40 flex items-center justify-center p-0.5 shadow-md">
+          <img src="assets/images/univalle-logo-red.png" alt="UNIVALLE" class="size-full object-contain" />
+        </div>
+        <div class="flex flex-col">
+          <span class="text-white font-bold text-lg tracking-tight drop-shadow-sm">UNIVALLE</span>
+          <span class="text-white/80 text-[10px] uppercase font-bold tracking-wider">Universidad Privada del Valle</span>
+        </div>
+      </div>
+
+      <!-- Manual Slider Arrow Buttons -->
+      <div class="flex items-center gap-2">
+        <button
+          type="button"
+          (click)="prevSlide()"
+          class="size-8 rounded-full bg-white/20 hover:bg-white/35 backdrop-blur-md border border-white/30 text-white flex items-center justify-center transition-all cursor-pointer shadow-xs"
+          title="Foto anterior"
+          aria-label="Foto anterior"
+        >
+          <ng-icon name="lucideChevronLeft" class="text-base" />
+        </button>
+        <button
+          type="button"
+          (click)="nextSlide()"
+          class="size-8 rounded-full bg-white/20 hover:bg-white/35 backdrop-blur-md border border-white/30 text-white flex items-center justify-center transition-all cursor-pointer shadow-xs"
+          title="Siguiente foto"
+          aria-label="Siguiente foto"
+        >
+          <ng-icon name="lucideChevronRight" class="text-base" />
+        </button>
+      </div>
+    </div>
+
+    <!-- Bottom Text Overlay Content with Dynamic Captions -->
+    <div class="relative z-20 text-white max-w-xl space-y-4 animate-fade-in">
+      @for (slide of campusSlides; track slide.image; let i = $index) {
+        @if (currentSlideIndex() === i) {
+          <div class="space-y-2 animate-fade-in">
+            <h2 class="text-3xl lg:text-4xl font-extrabold tracking-tight leading-tight text-white drop-shadow-md">
+              {{ slide.title }}
+            </h2>
+            <p class="text-sm lg:text-base text-white/90 font-normal leading-relaxed drop-shadow-xs">
+              {{ slide.subtitle }}
+            </p>
+          </div>
+        }
+      }
+
+      <!-- Interactive Slide Indicator Dots -->
+      <div class="flex items-center gap-2.5 pt-4">
+        @for (slide of campusSlides; track slide.image; let i = $index) {
+          <button
+            type="button"
+            (click)="setSlide(i)"
+            class="h-2 rounded-full transition-all duration-300 cursor-pointer"
+            [class.w-8]="currentSlideIndex() === i"
+            [class.bg-primary]="currentSlideIndex() === i"
+            [class.w-2]="currentSlideIndex() !== i"
+            [class.bg-white/50]="currentSlideIndex() !== i"
+            [title]="'Ver foto ' + (i + 1)"
+            [attr.aria-label]="'Ver foto ' + (i + 1)"
+          ></button>
+        }
+      </div>
+    </div>
+  </div>
+
+  <!-- Right Column: Login Form Container -->
+  <div class="w-full lg:w-1/2 flex flex-col justify-between p-6 sm:p-12 lg:p-16 bg-background relative z-10">
+    
+    <!-- Top Right Action Header -->
+    <div class="flex items-center justify-end">
+      <span class="text-xs font-semibold text-muted-foreground bg-muted/60 px-3.5 py-1.5 rounded-full border border-border/60">
+        Soporte TI UNIVALLE
+      </span>
+    </div>
+
+    <!-- Form Content Container -->
+    <div class="w-full max-w-md mx-auto my-auto py-8 animate-fade-in-up" [class.animate-shake]="isShaking()">
+      
+      <!-- Official UNIVALLE Centered Logo Header -->
+      <div class="mb-6 flex flex-col items-center sm:items-start text-center sm:text-left">
+        <img
+          src="assets/images/univalle-logo-red.png"
+          alt="Universidad Privada del Valle - UNIVALLE"
+          class="h-16 w-auto object-contain mb-3 drop-shadow-xs"
+        />
+        <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-foreground">
+          Plataforma Campus UNIVALLE
+        </h1>
+        <p class="text-muted-foreground text-xs sm:text-sm mt-1.5">
+          Ingresa tus credenciales institucionales para acceder a la gestión de infraestructura.
+        </p>
+      </div>
+
+      <!-- Error Alert Banner -->
+      @if (errorMessage()) {
+        <div class="mb-6 p-4 rounded-xl bg-destructive/10 border border-destructive/20 text-destructive text-sm flex items-start gap-3 animate-fade-in">
+          <ng-icon name="lucideShieldAlert" class="text-lg shrink-0 mt-0.5" />
+          <p class="font-medium leading-snug flex-1">{{ errorMessage() }}</p>
+        </div>
+      }
+
+      <!-- Success Alert Banner -->
+      @if (successMessage()) {
+        <div class="mb-6 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-sm flex items-center gap-3 animate-fade-in">
+          <ng-icon name="lucideCheckCircle2" class="text-lg shrink-0" />
+          <p class="font-medium leading-snug">{{ successMessage() }}</p>
+        </div>
+      }
+
+      <!-- Rate Limit Lockout Banner -->
+      @if (isLocked()) {
+        <div class="mb-6 p-4 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-600 dark:text-amber-400 text-center animate-pulse">
+          <div class="text-xs font-semibold uppercase tracking-wider mb-1">Acceso Bloqueado</div>
+          <div class="text-3xl font-mono font-bold tracking-widest my-1 text-amber-500">
+            {{ formattedLockoutTime() }}
+          </div>
+          <div class="text-xs opacity-90 mt-1">
+            Por seguridad, espera a que expire el temporizador antes de intentar nuevamente.
+          </div>
+        </div>
+      }
+
+      <!-- Form -->
+      <form (submit)="onSubmit($event)">
+        <z-field-group class="flex flex-col gap-5">
+          
+          <!-- Email Field -->
+          <div z-field [attr.data-invalid]="formErrors().email ? true : null">
+            <label z-field-label for="email" class="text-xs font-semibold text-foreground/80 mb-1.5 block">
+              Correo Electrónico Institucional
+            </label>
+            <div class="relative">
+              <input
+                z-input
+                id="email"
+                type="email"
+                placeholder="moyacarlos09@gmail.com"
+                [ngModel]="email()"
+                (ngModelChange)="email.set($event)"
+                name="email"
+                autocomplete="email"
+                [disabled]="isLoading() || isLocked()"
+                [attr.aria-invalid]="formErrors().email ? true : null"
+                class="w-full px-4 py-3 rounded-xl border border-input bg-background text-foreground focus:ring-2 focus:ring-ring focus:border-transparent transition-all text-xs"
+              />
+            </div>
+            @if (formErrors().email) {
+              <z-field-error class="text-xs text-destructive mt-1.5">{{ formErrors().email }}</z-field-error>
+            }
+          </div>
+
+          <!-- Password Field -->
+          <div z-field [attr.data-invalid]="formErrors().password ? true : null">
+            <label z-field-label for="password" class="text-xs font-semibold text-foreground/80 mb-1.5 block">
+              Contraseña
+            </label>
+            <div class="relative">
+              <input
+                z-input
+                id="password"
+                [type]="showPassword() ? 'text' : 'password'"
+                placeholder="••••••••"
+                [ngModel]="password()"
+                (ngModelChange)="password.set($event)"
+                name="password"
+                autocomplete="current-password"
+                [disabled]="isLoading() || isLocked()"
+                [attr.aria-invalid]="formErrors().password ? true : null"
+                class="w-full pl-4 pr-11 py-3 rounded-xl border border-input bg-background text-foreground focus:ring-2 focus:ring-ring focus:border-transparent transition-all text-xs"
+              />
+              <button
+                type="button"
+                (click)="togglePasswordVisibility()"
+                [disabled]="isLoading() || isLocked()"
+                class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
+                aria-label="Mostrar u ocultar contraseña"
+              >
+                <ng-icon [name]="showPassword() ? 'lucideEyeOff' : 'lucideEye'" class="text-lg" />
+              </button>
+            </div>
+            @if (formErrors().password) {
+              <z-field-error class="text-xs text-destructive mt-1.5">{{ formErrors().password }}</z-field-error>
+            }
+          </div>
+
+          <!-- Institutional Notice Replacement Box -->
+          <div class="p-3 rounded-xl bg-muted/40 border border-border/60 text-[11px] text-muted-foreground leading-relaxed flex items-start gap-2.5">
+            <ng-icon name="lucideShieldAlert" class="text-primary text-base shrink-0 mt-0.5" />
+            <p>
+              Acceso exclusivo para el personal autorizado del campus. Para solicitar la habilitación de cuenta o el restablecimiento de clave, contacta a la Dirección de Tecnologías de la Información de UNIVALLE.
+            </p>
+          </div>
+
+          <!-- Attempts Remaining Indicator -->
+          @if (attemptsRemaining() < 5 && !isLocked()) {
+            <div class="text-xs text-amber-600 dark:text-amber-400 font-medium text-right">
+              Intentos restantes antes del bloqueo: {{ attemptsRemaining() }}
+            </div>
+          }
+
+          <!-- Log In Submit Button -->
+          <button
+            z-button
+            type="submit"
+            [zLoading]="isLoading()"
+            [disabled]="isLoading() || isLocked()"
+            class="w-full mt-2 py-3.5 rounded-xl font-bold bg-primary text-primary-foreground hover:opacity-95 shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
+          >
+            @if (!isLoading()) {
+              <span>Iniciar Sesión UNIVALLE</span>
+            }
+          </button>
+
+        </z-field-group>
+      </form>
+
+    </div>
+
+    <!-- Institutional Bottom Footer -->
+    <div class="text-center text-xs text-muted-foreground pt-4">
+      <span>© 2026 Universidad Privada del Valle — UNIVALLE. Todos los derechos reservados.</span>
+    </div>
+
+  </div>
+</div>

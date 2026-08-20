@@ -1,0 +1,12 @@
+<button
+  type="button"
+  (click)="toggleTheme()"
+  class="size-9 rounded-full border border-border/80 bg-background/50 hover:bg-accent text-muted-foreground hover:text-foreground transition-all duration-200 flex items-center justify-center relative group shadow-2xs"
+  [title]="themeService.theme() === 'dark' ? 'Cambiar a Modo Claro' : 'Cambiar a Modo Oscuro'"
+  aria-label="Cambiar tema de la aplicación"
+>
+  <ng-icon
+    [name]="themeService.theme() === 'dark' ? 'lucideSun' : 'lucideMoon'"
+    class="text-base transition-transform duration-300 group-hover:rotate-45"
+  />
+</button>

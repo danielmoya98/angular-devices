@@ -1,1 +1,221 @@
-/* You can add global styles to this file, and also import other style files */
+@layer ng-icon, theme, base, components, utilities;
+@import 'tailwindcss';
+@import './app/shared/core/css/tailwind';
+@plugin "tailwindcss-animate";
+
+@custom-variant dark (&:is(.dark *));
+
+/* UNIVALLE Institutional Theme Tokens */
+:root {
+  --radius: 0.625rem;
+
+  /* Primary: Rojo Univalle (#A6192E) & Borgoña (#7A0C1D) */
+  --primary: #A6192E;
+  --primary-dark: #7A0C1D;
+  --primary-foreground: #FFFFFF;
+
+  /* Secondary: Azul Marino Institucional (#0B2341) */
+  --secondary: #0B2341;
+  --secondary-foreground: #FFFFFF;
+
+  /* Accent: Dorado / Amarillo Mostaza (#D4A017) */
+  --accent: #D4A017;
+  --accent-foreground: #061325;
+
+  /* Surfaces & Backgrounds: Gris Fondo Neutro (#F4F6F9) & Texto Principal (#1E293B) */
+  --background: #F4F6F9;
+  --foreground: #1E293B;
+  --card: #FFFFFF;
+  --card-foreground: #1E293B;
+  --popover: #FFFFFF;
+  --popover-foreground: #1E293B;
+
+  /* Borders & Muted Elements: Gris Borde (#E2E8F0) */
+  --border: #E2E8F0;
+  --input: #E2E8F0;
+  --muted: #F1F5F9;
+  --muted-foreground: #64748B;
+  --ring: #A6192E;
+
+  /* Success Status: Verde Operativo (#15803D) */
+  --success: #15803D;
+  --success-foreground: #FFFFFF;
+
+  /* Destructive & Charts */
+  --destructive: #DC2626;
+  --destructive-foreground: #FFFFFF;
+  --chart-1: #A6192E;
+  --chart-2: #0B2341;
+  --chart-3: #D4A017;
+  --chart-4: #15803D;
+  --chart-5: #7A0C1D;
+
+  /* Sidebar Tokens: Azul Marino (#0B2341) */
+  --sidebar: #0B2341;
+  --sidebar-foreground: #F4F6F9;
+  --sidebar-primary: #A6192E;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #16365C;
+  --sidebar-accent-foreground: #FFFFFF;
+  --sidebar-border: rgba(255, 255, 255, 0.12);
+  --sidebar-ring: #A6192E;
+}
+
+/* UNIVALLE Dark Mode: Azul Profundo de Fondo (#061325) */
+.dark {
+  --background: #061325;
+  --foreground: #F4F6F9;
+  --card: #0B2341;
+  --card-foreground: #F4F6F9;
+  --popover: #0B2341;
+  --popover-foreground: #F4F6F9;
+
+  --primary: #A6192E;
+  --primary-dark: #7A0C1D;
+  --primary-foreground: #FFFFFF;
+
+  --secondary: #16365C;
+  --secondary-foreground: #F4F6F9;
+  --accent: #D4A017;
+  --accent-foreground: #061325;
+
+  --muted: #16365C;
+  --muted-foreground: #94A3B8;
+  --border: rgba(255, 255, 255, 0.15);
+  --input: rgba(255, 255, 255, 0.15);
+  --ring: #A6192E;
+
+  --destructive: #EF4444;
+  --destructive-foreground: #FFFFFF;
+
+  --sidebar: #061325;
+  --sidebar-foreground: #F4F6F9;
+  --sidebar-primary: #A6192E;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #0B2341;
+  --sidebar-accent-foreground: #FFFFFF;
+  --sidebar-border: rgba(255, 255, 255, 0.1);
+  --sidebar-ring: #A6192E;
+}
+
+@theme inline {
+  --color-univalle-red: #A6192E;
+  --color-univalle-red-dark: #7A0C1D;
+  --color-univalle-navy: #0B2341;
+  --color-univalle-dark-bg: #061325;
+  --color-univalle-gold: #D4A017;
+  --color-univalle-bg-surface: #F4F6F9;
+  --color-univalle-border: #E2E8F0;
+  --color-univalle-text-primary: #1E293B;
+  --color-univalle-success: #15803D;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  input[type="number"] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--muted-foreground);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 5px;
+  background: var(--muted);
+}
+
+/* View Transitions API - Theme Switch (Right-to-Left Smooth Slide Animation) */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 500ms;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  mix-blend-mode: normal;
+}
+
+::view-transition-old(root) {
+  animation-name: theme-slide-out-left;
+}
+
+::view-transition-new(root) {
+  animation-name: theme-slide-in-right;
+}
+
+@keyframes theme-slide-out-left {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(-100%);
+    opacity: 0.8;
+  }
+}
+
+@keyframes theme-slide-in-right {
+  from {
+    transform: translateX(100%);
+    opacity: 0.8;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}

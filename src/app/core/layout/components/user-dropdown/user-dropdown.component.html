@@ -1,0 +1,102 @@
+<div class="relative w-full">
+  
+  <!-- Sidebar Footer User Card Trigger Button -->
+  <button
+    type="button"
+    (click)="toggleDropdown()"
+    class="w-full flex items-center justify-between p-2 rounded-2xl border border-sidebar-border/60 bg-sidebar-accent/40 hover:bg-sidebar-accent text-sidebar-foreground transition-all duration-200 group shadow-2xs cursor-pointer"
+    [class.justify-center]="isCollapsed()"
+    [class.p-2]="isCollapsed()"
+    [class.p-2.5]="!isCollapsed()"
+    [title]="isCollapsed() ? userName() + ' (' + userRole() + ')' : ''"
+    aria-label="Menú de usuario"
+  >
+    <div class="flex items-center gap-3 min-w-0">
+      <div class="relative shrink-0">
+        <z-avatar
+          [zFallback]="userInitials()"
+          zSize="default"
+          class="bg-primary text-primary-foreground font-bold shadow-xs border border-primary/20"
+        ></z-avatar>
+        <!-- Online Status Dot -->
+        <span class="absolute -bottom-0.5 -right-0.5 size-2.5 rounded-full bg-emerald-500 ring-2 ring-sidebar"></span>
+      </div>
+
+      @if (!isCollapsed()) {
+        <div class="flex flex-col text-left min-w-0 truncate animate-fade-in">
+          <span class="text-xs font-bold text-sidebar-foreground truncate leading-tight">{{ userName() }}</span>
+          <span class="text-[10px] text-muted-foreground truncate leading-tight">{{ userEmail() }}</span>
+        </div>
+      }
+    </div>
+
+    @if (!isCollapsed()) {
+      <ng-icon name="lucideChevronUp" class="text-xs text-muted-foreground group-hover:text-sidebar-foreground transition-transform duration-200" [class.rotate-180]="isOpen()" />
+    }
+  </button>
+
+  <!-- User Action Popover / Dropdown Menu -->
+  @if (isOpen()) {
+    <div
+      class="absolute mb-2 w-64 rounded-2xl bg-card text-card-foreground border border-border/80 shadow-2xl z-[9999] overflow-hidden animate-fade-in-up"
+      [class.bottom-full]="!isCollapsed()"
+      [class.left-0]="!isCollapsed()"
+      [class.bottom-0]="isCollapsed()"
+      [class.left-full]="isCollapsed()"
+      [class.ml-3]="isCollapsed()"
+    >
+      <!-- User Info Header -->
+      <div class="p-4 border-b border-border/80 bg-muted/30 flex items-center gap-3">
+        <div class="relative shrink-0">
+          <z-avatar
+            [zFallback]="userInitials()"
+            zSize="lg"
+            class="bg-primary text-primary-foreground font-bold shadow-sm"
+          ></z-avatar>
+          <span class="absolute -bottom-0.5 -right-0.5 size-3 rounded-full bg-emerald-500 ring-2 ring-popover"></span>
+        </div>
+        <div class="flex flex-col min-w-0">
+          <span class="text-xs font-bold text-card-foreground truncate">{{ userName() }}</span>
+          <span class="text-[11px] text-muted-foreground truncate">{{ userEmail() }}</span>
+          <span class="mt-1 inline-flex items-center px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider bg-primary/15 text-primary border border-primary/20 w-fit">
+            {{ userRoleLabel() }}
+          </span>
+        </div>
+      </div>
+
+      <!-- Menu Items -->
+      <div class="p-1.5 space-y-0.5 text-xs font-medium">
+        <button
+          type="button"
+          (click)="editProfile()"
+          class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-accent hover:text-accent-foreground text-card-foreground transition-colors group cursor-pointer"
+        >
+          <ng-icon name="lucideUser" class="text-base text-muted-foreground group-hover:text-primary transition-colors" />
+          <span>Editar Perfil</span>
+        </button>
+
+        <button
+          type="button"
+          (click)="openSettings()"
+          class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-accent hover:text-accent-foreground text-card-foreground transition-colors group cursor-pointer"
+        >
+          <ng-icon name="lucideSettings" class="text-base text-muted-foreground group-hover:text-primary transition-colors" />
+          <span>Configuración</span>
+        </button>
+
+        <div class="h-px bg-border/80 my-1"></div>
+
+        <button
+          type="button"
+          (click)="signOut()"
+          class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-destructive/10 text-destructive font-medium transition-colors cursor-pointer"
+        >
+          <ng-icon name="lucideLogOut" class="text-base" />
+          <span>Cerrar Sesión</span>
+        </button>
+      </div>
+
+    </div>
+  }
+
+</div>

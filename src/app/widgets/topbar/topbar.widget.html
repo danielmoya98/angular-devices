@@ -1,0 +1,38 @@
+<header
+  class="h-16 border-b border-border/80 bg-background/80 backdrop-blur-md sticky top-0 z-30 flex items-center justify-between px-4 sm:px-6 shadow-2xs shrink-0"
+>
+  <!-- Left: Mobile Menu Button & Reusable Breadcrumb Nav -->
+  <div class="flex items-center gap-3 sm:gap-4">
+    <!-- Mobile Menu Toggle -->
+    <button
+      type="button"
+      (click)="onToggleMobile()"
+      class="lg:hidden p-2 rounded-xl border border-border hover:bg-accent text-foreground transition-colors cursor-pointer"
+      aria-label="Abrir menú"
+    >
+      <ng-icon name="lucideMenu" class="text-xl" />
+    </button>
+
+    <!-- Desktop Sidebar Toggle Button -->
+    <button
+      type="button"
+      (click)="onToggleDesktop()"
+      class="hidden lg:flex p-2 rounded-xl border border-border hover:bg-accent text-foreground transition-colors cursor-pointer"
+      aria-label="Alternar menú lateral"
+    >
+      <ng-icon name="lucidePanelLeft" class="text-lg" />
+    </button>
+
+    <!-- Reusable Breadcrumb Navigation -->
+    <app-breadcrumb-nav></app-breadcrumb-nav>
+  </div>
+
+  <!-- Right Actions: Notifications, Theme Toggle -->
+  <div class="flex items-center gap-2.5 sm:gap-3">
+    <!-- Reusable Notification Dropdown -->
+    <app-notification-dropdown></app-notification-dropdown>
+
+    <!-- Reusable Theme Toggle (Dark/Light) -->
+    <app-theme-toggle></app-theme-toggle>
+  </div>
+</header>

@@ -1,0 +1,15 @@
+<z-breadcrumb class="text-xs sm:text-sm font-medium">
+  @for (item of breadcrumbs(); track item.url; let last = $last) {
+    <z-breadcrumb-item>
+      @if (!last) {
+        <a z-breadcrumb-link [routerLink]="item.url" class="text-muted-foreground hover:text-foreground transition-colors">
+          {{ item.label }}
+        </a>
+      } @else {
+        <span z-breadcrumb-page class="font-bold text-foreground">
+          {{ item.label }}
+        </span>
+      }
+    </z-breadcrumb-item>
+  }
+</z-breadcrumb>

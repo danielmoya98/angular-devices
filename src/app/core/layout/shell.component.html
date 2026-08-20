@@ -1,0 +1,37 @@
+<div class="h-screen w-screen flex bg-background text-foreground overflow-hidden select-none">
+
+  <!-- Mobile Backdrop Overlay -->
+  @if (isMobileOpen()) {
+    <div
+      (click)="closeMobileSidebar()"
+      class="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 lg:hidden animate-fade-in"
+    ></div>
+  }
+
+  <!-- Sidebar Widget -->
+  <app-sidebar-widget
+    [isCollapsed]="isCollapsed()"
+    [isMobileOpen]="isMobileOpen()"
+    (closeMobileSidebar)="closeMobileSidebar()"
+  ></app-sidebar-widget>
+
+  <!-- Main Content Column -->
+  <div class="flex-1 flex flex-col min-w-0 h-screen overflow-hidden">
+    
+    <!-- Topbar Widget -->
+    <app-topbar-widget
+      [isCollapsed]="isCollapsed()"
+      (toggleSidebar)="toggleSidebar()"
+      (toggleMobileSidebar)="toggleMobileSidebar()"
+    ></app-topbar-widget>
+
+    <!-- Main Content Outlet Area -->
+    <main class="flex-1 overflow-y-auto min-w-0 bg-muted/15 p-4 sm:p-6 lg:p-8 flex flex-col">
+      <div class="flex-1 w-full max-w-7xl mx-auto flex flex-col gap-6">
+        <router-outlet />
+      </div>
+    </main>
+
+  </div>
+
+</div>
