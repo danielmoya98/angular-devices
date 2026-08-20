@@ -1,0 +1,12 @@
+services:
+  - type: static
+    name: univalle-campus-devices
+    buildCommand: npm install && npm run build
+    staticPublishPath: ./dist/angular-devices/browser
+    envVars:
+      - key: NODE_VERSION
+        value: '22'
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
